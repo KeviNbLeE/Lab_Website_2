@@ -12,9 +12,9 @@
 		receiving_yards - The total number of receiving yards in the student's football career for the Buffs.
 */
 var players = [{name:"John Doe", img: "../resources/img/player1.jpg", alt:"Image of Player 1", year:"Sophomore", major:"Art", games_played: 23, pass_yards: 435, rushing_yards: 200, receiving_yards: 88},
-				{name:"James Smith", img: "../resources/img/player2.jpg", alt:"Image of Player 2", year:"Junior", major:"Science", games_played: 17, pass_yards: 192, rushing_yards: 102, receiving_yards: 344},
-				{name:"Samuel Phillips", img: "../resources/img/player3.jpg", alt:"Image of Player 3", year:"Freshman", major:"Math", games_played: 8, pass_yards: 35, rushing_yards: 70, receiving_yards: 98},
-				{name:"Robert Myers", img: "../resources/img/player4.jpg", alt:"Image of Player 4", year:"Senior", major:"Computer Science", games_played: 31, pass_yards: 802, rushing_yards: 375, receiving_yards: 128}];
+		{name:"James Smith", img: "../resources/img/player2.jpg", alt:"Image of Player 2", year:"Junior", major:"Science", games_played: 17, pass_yards: 192, rushing_yards: 102, receiving_yards: 344},
+		{name:"Samuel Phillips", img: "../resources/img/player3.jpg", alt:"Image of Player 3", year:"Freshman", major:"Math", games_played: 8, pass_yards: 35, rushing_yards: 70, receiving_yards: 98},
+		{name:"Robert Myers", img: "../resources/img/player4.jpg", alt:"Image of Player 4", year:"Senior", major:"Computer Science", games_played: 31, pass_yards: 802, rushing_yards: 375, receiving_yards: 128}];
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -70,16 +70,16 @@ function loadStatsPage(){
 	var wins = 0;
 	var losses = 0;
 	for(var i = 2; i<table.rows.length; i++){
-		var homescore = table.rows[i].cells[2].innerHTML;
-		var visitscore = table.rows[i].cells[3].innerHTML;
+		var homescore = table.rows[i].cells[2].innerHTML;	//from html table cell 2 is the homescore
+		var visitscore = table.rows[i].cells[3].innerHTML;	//from html table cell 3 is the visitingscore
 
 		if(homescore>visitscore){
-			var winner = "CU";
+			var winner = "CU";	//default to be CU as we are the home team
 			wins++;
 		}
 
 		else if(visitscore>homescore){
-			var winner = table.rows[i].cells[1].innerHTML;
+			var winner = table.rows[i].cells[1].innerHTML;	//from html table cell 1 is the opposing team's name
 			losses++;
 		}
 
@@ -87,11 +87,11 @@ function loadStatsPage(){
 			var winner = "Tie";
 		}
 
-		table.rows[i].cells[4].innerHTML = winner;
+		table.rows[i].cells[4].innerHTML = winner;	//places the winner in cell 4 of the table
 	}
 
-	document.getElementById('wins').innerHTML = wins;
-	document.getElementById('losses').innerHTML = losses;
+	document.getElementById('wins').innerHTML = wins;	//gets the total wins
+	document.getElementById('losses').innerHTML = losses;	//gets the total losses
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -109,12 +109,12 @@ function loadStatsPage(){
 				-As a note, the id for the dropdown menu is player_selector.
 */
 function loadPlayersPage(){
-	var selectionText = "";
+	var selectedText = "";
 	for(var i = 0; i<players.length; i++){
-		selectionText += '<a class="dropdown-item" href="#" onclick="switchPlayers(' + i + ')">' + players[i].name + '</a>';
+		selectedText += '<a class="dropdown-item" href="#" onclick="switchPlayers(' + i + ')">' + players[i].name + '</a>';
 	}
 
-	document.getElementById("player_selector").innerHTML = selectionText;
+	document.getElementById("player_selector").innerHTML = selectedText;	//update innerHTML dropdown menu with id = player_selector
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*
@@ -129,6 +129,10 @@ function loadPlayersPage(){
 				p_yards    - the number of passing yards
 				r_yards    - the number of rushing yards
 				rec_yards  - the number of receiving yards
+			Calculated values:
+				avg_p_yards - the average number of passing yards for the player's Buff career
+				avg_r_yards - the average number of rushing yards for the player's Buff career
+				avg-rec_yards - the average number of receiving yards for the player's Buff career
 */
 function switchPlayers(playerNum){
 	document.getElementById("p_year").innerHTML = players[playerNum].year;
@@ -138,14 +142,9 @@ function switchPlayers(playerNum){
 	document.getElementById("p_yards").innerHTML = players[playerNum].pass_yards;
 	document.getElementById("r_yards").innerHTML = players[playerNum].rushing_yards;
 	document.getElementById("rec_yards").innerHTML = players[playerNum].receiving_yards;
+	//averages would be total divided by number of games they have played
 	document.getElementById("avg_p_yards").innerHTML = players[playerNum].pass_yards/players[playerNum].games_played;
 	document.getElementById("avg_r_yards").innerHTML = players[playerNum].rushing_yards/players[playerNum].games_played;
 	document.getElementById("avg_rec_yards").innerHTML = players[playerNum].receiving_yards/players[playerNum].games_played;
 }
 
-/*
-		Calculated values:
-			avg_p_yards   - the average number of passing yards for the player's Buff career
-			avg_r_yards   - the average number of rushing yards for the player's Buff career
-			avg_rec_yards - the average number of receiving yards for the player's Buff career
-*/
